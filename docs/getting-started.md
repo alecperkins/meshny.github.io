@@ -167,7 +167,7 @@ There are currently two different Meshtastic networks operating in the NYC area.
 To connect to the wide-area MeshCore network in the NYC area:
 
 1. Ensure your companion is on the [latest firmware](https://flasher.meshcore.io) <span class="js-mc-companion-firmware"></span>
-2. Add hashtag channels on the MeshCore app by clicking the 3 dots at the top right of the main screen, Add Channel, then join a hashtag channel.
+2. Add hashtag channels on the MeshCore app by clicking the 3 dots at the top right of the main screen, Add Channel, then join a hashtag channel. If you click Advanced Settings under that, you have the option to add a region.
 3. (recommended) Set your Path Hash Size to <u>2-byte</u> (in Experimental Settings in the app)
 4. (experimental) Set region scope in channels, 3 dots in the top right while in the channel and click Set Region Scope. If there are no regions in there, click the 3 dots in the top right and click Discover Regions, and click the check mark to the regions for them to show up in the Set Region Scope menu. You can also click the 3 dots in the top right of the Set Region Scope and click clear scope to go back to default flooding. Other MeshCore client apps have a way to do this as well.
 
@@ -176,10 +176,7 @@ Channels:
 - #nyc - scoped to nyc
 - #hv - scoped to hv
 - #li - scoped to li
-- #hud-testing - scope to hud
-- #nyc-testing - scope to nyc
-- #hv-testing - scope to hv
-- #li-testing - scope to li
+- #testing - choose which region you want to flood too, or can be left as no scope for now
 - #emergency - no scope (will change later)
 
 <div class="callout" id="meshcore-radio-settings">
