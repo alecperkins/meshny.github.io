@@ -323,6 +323,10 @@ details summary {
   font-size: 0.8em;
 }
 
+.condensed {
+  line-height: 1;
+}
+
 dt {
   float: left;
   clear: left;

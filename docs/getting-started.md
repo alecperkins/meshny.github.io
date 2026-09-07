@@ -6,7 +6,19 @@ title: Getting Started
 
 There are [several wide-area LoRa mesh networks](https://coverage.nyme.sh) in the NYC metro area, using different technologies and in various states of formation. You are welcome to join any or all of them! <em>Please</em> read and follow the configuration guidelines for each one, to give yourself and everyone else an optimal experience.
 
-Two networks use [Meshtastic](https://meshtastic.org), and one uses [MeshCore](https://meshcore.io). Which one you can reach depends on who else is around you. Be patient, try all three out, send hello messages to see if you are in range.
+Three networks use [Meshtastic](https://meshtastic.org), and one uses [MeshCore](https://meshcore.io). Which one you can reach depends on who else is around you. Be patient, try all three out, send hello messages to see if you are in range.
+
+
+## Terminology
+
+A quick primer on important [terminology](/glossary) used below:
+
+- **node**: a small radio device that communicates with other nodes, your interface to a <u>mesh</u>
+- **LoRa**: the protocol <u>nodes</u> use to exchange data
+- **mesh**: shorthand for a particular network of <u>nodes</u> operating on the same <u>LoRa<u> settings that exchange messages via <u>hops</u>
+- **hop**: the relay of a message from one <u>node</u> to another, forming the <u>mesh</u>
+- **flood**: a pattern for disseminating a message throughout the <u>mesh</u>, to all <u>nodes</u> in reach
+- **infrastructure**: <u>nodes</u> dedicated to relaying messages, providing <u>hops</u> between users to extend the range they can communicate
 
 
 ## Hardware
@@ -25,7 +37,7 @@ To connect to the wide-area Meshtastic networks in the NYC area…
 2. Ensure your node is on the [latest Beta or Alpha firmware](https://flasher.meshtastic.org)<span class="js-mt-firmware"></span>
 3. (optional) Enable LoRa &gt; Ok To MQTT to show on the [map/chat](https://meshview.nyme.sh/map)
 4. Configure your node as described below, based on how you use it:
-    <br/><small>Note that the config guidelines below will likely deviate from the official recommendations. This is because a large wide-area mesh network has different requirements than the more personal mesh networks Meshtastic is oriented toward by default. The configs here are tailored specifically for our use case; it makes for a good experience within the context of these networks, but may not be useful if you are using Meshtastic for personal meshes.</small>
+    <br/><small class="condensed d-block">Note that the config guidelines below will likely deviate from the official recommendations. This is because a large wide-area mesh network has different requirements than the more personal mesh networks Meshtastic is oriented toward by default. The configs here are tailored specifically for our use case; it makes for a good experience within the context of these networks, but may not be useful if you are using Meshtastic for personal meshes.</small>
 
 ### Personal node configuration
 
@@ -44,7 +56,7 @@ These are nodes that you carry with you, in your pocket, bag, belt, mounted on y
     - GPS polling interval: <u>30 minutes</u> or longer
 3. Telemetry: <u>off</u>
 4. Device info: <u>19 hour</u> interval or longer (68,400 seconds)
-5. LoRa <span class="js-konami" data-alt="bunny">hop</span> limit: <u>7</u>
+5. LoRa <span class="js-konami" data-alt="bunny">hop</span> limit: <u>7</u> (Yes, really.)
 
 <details class="small">
   <summary>Explanation of the settings</summary>
@@ -115,10 +127,11 @@ Nodes that are in a fixed location and intended solely for relay purposes. These
 
 ### Radio settings
 
-There are currently two different Meshtastic networks operating in the NYC area. Joining a network requires configuring your radio to use the same LoRa settings. You are free to join whichever one you can reach, or both if you have multiple devices.
+There are currently three different Meshtastic networks operating in the NYC area. Joining a network requires configuring your radio to use the same LoRa settings. You are free to join whichever one you can reach, or several if you have multiple devices.
 
 <div class="callout -primary" id="mediumslow">
   <p><strong>Be a good mesh citizen:</strong> <em>Please</em> ensure your node follows the <a href="#personal-node-configuration">above configuration</a> before connecting to the network. Please do not use high-traffic applications like Reticulum or TAK on this network; they saturate the mesh and make it unusable for everyone. Sustained encrypted traffic will be detected and blocked by the infrastructure to protect the limited airtime.</p>
+  <h4>MS48</h4>
   <p>Current primary mesh radio settings:</p>
   <dl>
     <dt>Preset</dt>
@@ -130,28 +143,48 @@ There are currently two different Meshtastic networks operating in the NYC area.
     <dt>Public channel key</dt>
     <dd><u>1 byte</u>, <u><code>AQ==</code></u></dd>
   </dl>
-  <p>
-    <strong>Personal nodes: increase LoRa <span class="js-konami" data-alt="bunny">hop</span> limit to <u>7</u>.</strong> (Yes, really.)
-  </p>
   <p class="small">
-    This network is <a href="/preset-testing/">actively forming</a>. Not all infrastructure has moved yet. You may find it difficult to reach some parts of the network during the transition. Network status and help is available in the <a href="https://discord.nyme.sh">Discord chat</a>.
+    This is the most established and active network, but using it well relies on conforming to the interval settings and being able to reach the infrastructure. Network status and help is available in the <a href="https://discord.nyme.sh">Discord chat</a>.
   </p>
 </div>
 
-<div class="callout" id="longfast">
-  <p>Legacy network settings (LongFast):</p>
+<div class="callout" id="longturbo">
+  <h4>LT14</h4>
+  <p>Default network settings (LongTurbo):</p>
   <dl>
     <dt>Preset</dt>
-    <dd><u>Long Range - Fast</u></dd>
+    <dd><u>Long Range - Turbo</u> or <u>LONG_TURBO</u></dd>
     <dt>Frequency slot</dt>
-    <dd><u>20</u> or <u>0</u></dd>
+    <dd><u>14</u> or <u>0</u></dd>
     <dt>Public channel name</dt>
-    <dd><u>LongFast</u> or blank</dd>
+    <dd><u>LongTurbo</u> or blank</dd>
     <dt>Public channel key</dt>
     <dd><u>1 byte</u>, <u><code>AQ==</code></u></dd>
   </dl>
   <p class="small">
-    These settings are the default, out-of-the-box Meshtastic settings. A bit of infrastructure is maintained on these settings to catch newcomers, travelers, and stragglers. Some users continue with this network since it provides the greater range that they need (at the expense of severe congestion).
+    These settings are the new default settings for Meshtastic as of version 2.8. The network is <a href="https://coverage.nyme.sh/#12/40.72867/-73.95292/LT14/v=noninfra,cells,contours">very small</a>, with only a handful of users and infrastructure nodes.
+  </p>
+</div>
+
+<div class="callout" id="longfast">
+  <h4>LF20</h4>
+  <details>
+    <summary>
+      Legacy network settings (LongFast):
+    </summary>
+    <dl>
+      <dt>Preset</dt>
+      <dd><u>Long Range - Fast</u></dd>
+      <dt>Frequency slot</dt>
+      <dd><u>20</u> or <u>0</u></dd>
+      <dt>Public channel name</dt>
+      <dd><u>LongFast</u> or blank</dd>
+      <dt>Public channel key</dt>
+      <dd><u>1 byte</u>, <u><code>AQ==</code></u></dd>
+    </dl>
+  </details>
+  <p class="small">
+    These settings used to be the default, out-of-the-box Meshtastic settings prior to version 2.8. A bit of infrastructure is maintained on these settings to catch newcomers, travelers, and stragglers. The LongFast settings are <em>not recommended</em> for new nodes.
   </p>
 </div>
 
@@ -168,7 +201,7 @@ To connect to the wide-area MeshCore network in the NYC area:
 
 1. Ensure your companion is on the [latest firmware](https://flasher.meshcore.io) <span class="js-mc-companion-firmware"></span>
 2. Add hashtag channels on the MeshCore app by clicking the 3 dots at the top right of the main screen, Add Channel, then join a hashtag channel. If you click Advanced Settings under that, you have the option to add a region.
-3. (recommended) Set your Path Hash Size to <u>2-byte</u> (in Experimental Settings in the app)
+3. (recommended) Set your Path Hash Size to <u>2-byte</u>
 4. (experimental) Set region scope in channels, 3 dots in the top right while in the channel and click Set Region Scope. If there are no regions in there, click the 3 dots in the top right and click Discover Regions, and click the check mark to the regions for them to show up in the Set Region Scope menu. You can also click the 3 dots in the top right of the Set Region Scope and click clear scope to go back to default flooding. Other MeshCore client apps have a way to do this as well.
 
 Channels:
@@ -176,10 +209,11 @@ Channels:
 - #nyc - scoped to nyc
 - #hv - scoped to hv
 - #li - scoped to li
-- #testing - choose which region you want to flood too, or can be left as no scope for now
+- #testing - choose which region you want to flood to, or can be left as no scope for now
 - #emergency - no scope (will change later)
 
 <div class="callout" id="meshcore-radio-settings">
+  <h4>MC</h4>
   <p>MeshCore radio settings:</p>
   <dl>
     <dt>Preset</dt>
@@ -213,7 +247,7 @@ Channels:
     3. If you are at the edge of a region, or steps 1 and 2 give different results, you are free to combine the results, just don't list the shorthands twice.
     4. Once you have your list, run `region put <region>` for every region, then `region allowf <region>` for every region, then `region save`.
         - Example for Manhattan:
-          
+
           `region put east`
 
           `region put northeast`
@@ -227,7 +261,7 @@ Channels:
           `region allowf northeast`
 
           `region allowf hud`
-          
+
           `region allowf nyc`
 
           `region save`
