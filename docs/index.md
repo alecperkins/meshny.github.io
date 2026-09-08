@@ -27,6 +27,8 @@ The NYC *MeshCore* presence is operating on <u>US defaults</u>. Check the [confi
 
 ## Stats & Services
 
+<script src="https://coverage.nyme.sh/embed/messages.js"></script>
+
 ### MQTT Stats & Information
   - [guide to MQTT in the nyme.sh](/mqtt/)
 
